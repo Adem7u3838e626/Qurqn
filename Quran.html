@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عرض القرآن الكريم</title>
+  <!--font quran-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!--font text-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&family=Rakkas&display=swap" rel="stylesheet">
+  <style>
+   
+  </style>
+</head>
+<body>
+  <div id="pr">
+    <p> مرحبًا بك في موقعنا للقرآن الكريم! نحن هنا لنوفر لك تجربة فريدة ومميزة في قراءة القرآن الكريم عبر الإنترنت. مع واجهة بسيطة وسهلة الاستخدام، يمكنك الوصول إلى أي سورة ترغب في قراءتها بسهولة. ما يميز موقعنا هو أنه بفضل الضغط على زر السورة، ستجد نفسك واقعًا في تلك السورة على الفور، مما يوفر عليك الوقت والجهد في البحث. تصفح القرآن بسهولة واستمتع بتجربة قراءة مميزة معنا! </p>
+    <p>اختر السورة:</p>
+  </div>
+
+<div id="buttons"></div>
+<div id="verses"></div>
+
+<script>
+  
+  fetch('https://api.npoint.io/99c279bb173a6e28359c/data')
+    .then(response => response.json())
+    .then(data => {
+      const buttonsDiv = document.getElementById('buttons');
+      const versesDiv = document.getElementById("verses")
+      const prgrph = document.getElementById("pr")
+      data.forEach(sura => {
+        const button = document.createElement('button');
+        button.textContent = sura.nama;
+        button.classList.add("button-81");
+        button.addEventListener('click', () => {          
+          buttonsDiv.classList.add('hidden');
+          prgrph.classList.add('hidden');
+
+          
+          fetch(`https://api.npoint.io/99c279bb173a6e28359c/surat/${sura.nomor}`)
+            .then(response => response.json())
+            .then(verses => {
+         
+              versesDiv.innerHTML = '';
+              verses.forEach(verse => {
+                const p = document.createElement('p');
+                p.textContent = verse.ar; 
+                versesDiv.appendChild(p);
+                p.id = 'surah'
+              });
+            });
+        });
+        buttonsDiv.appendChild(button);
+      });
+    });
+</script>
+
+<footer>
+  <div class="footerContainer">
+      <div class="socialIcons">
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+          <a href=""><i class="fa-brands fa-instagram"></i></a>
+          <a href=""><i class="fa-brands fa-twitter"></i></a>
+          <a href=""><i class="fa-brands fa-google-plus"></i></a>
+          <a href=""><i class="fa-brands fa-youtube"></i></a>
+      </div>
+      <div class="footerNav">
+          <ul><li><a href="">Home</a></li>
+              <li><a href="">News</a></li>
+              <li><a href="">About</a></li>
+              <li><a href="">Contact Us</a></li>
+              <li><a href="">our Team</a></li>
+          </ul>
+      </div>
+      
+  </div>
+  <div class="footerBottom">
+      <p>Copyright &copy;2024; Designed by <span class="designer">omar rezgui , adam louati  </span></p>
+  </div>
+</footer>
+
+</body>
+</html>   
+</script>
+
+</body>
+</html>
